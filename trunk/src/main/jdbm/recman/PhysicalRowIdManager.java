@@ -254,16 +254,18 @@ final class PhysicalRowIdManager {
 		}
 
 		short hdr = pos;
-		while (RecordHeader.getAvailableSize(curBlock, hdr) != 0 && pos < BLOCK_SIZE) {
-			pos += RecordHeader.getAvailableSize(curBlock, hdr) + RecordHeader.SIZE;
+        int availSize = RecordHeader.getAvailableSize(curBlock, hdr);
+		while (availSize != 0 && pos < BLOCK_SIZE) {
+			pos += availSize + RecordHeader.SIZE;
 			if (pos == BLOCK_SIZE) {
 				// Again, a filled page.
 				file.release(curBlock);
 				return allocNew(size, 0);
 			}
-
 			hdr = pos;
+            availSize = RecordHeader.getAvailableSize(curBlock, hdr);
 		}
+
 
 		if (pos == RecordHeader.SIZE) {
 			// the last record exactly filled the page. Restart forcing
