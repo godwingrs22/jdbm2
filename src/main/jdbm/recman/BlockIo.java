@@ -231,18 +231,6 @@ public final class BlockIo {
      */
     public long readLong( int pos )
     {
-        // Contributed by Erwin Bolwidt <ejb@klomp.org>
-        // Gives about 15% performance improvement
-        return
-            ( (long)( ((data[pos+0] & 0xff) << 24) |
-                      ((data[pos+1] & 0xff) << 16) |
-                      ((data[pos+2] & 0xff) <<  8) |
-                      ((data[pos+3] & 0xff)      ) ) << 32 ) |
-            ( (long)( ((data[pos+4] & 0xff) << 24) |
-                      ((data[pos+5] & 0xff) << 16) |
-                      ((data[pos+6] & 0xff) <<  8) |
-                      ((data[pos+7] & 0xff)      ) ) & 0xffffffff );
-        /* Original version by Alex Boisvert.  Might be faster on 64-bit JVMs.
         return
             (((long)(data[pos+0] & 0xff) << 56) |
              ((long)(data[pos+1] & 0xff) << 48) |
@@ -252,7 +240,7 @@ public final class BlockIo {
              ((long)(data[pos+5] & 0xff) << 16) |
              ((long)(data[pos+6] & 0xff) <<  8) |
              ((long)(data[pos+7] & 0xff) <<  0));
-        */
+
     }
 
     /**
