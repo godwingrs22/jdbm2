@@ -329,4 +329,18 @@ public class SerializationTest extends TestCase{
 		assertEquals(l1,Serialization.deserialize(Serialization.serialize(l1)));
 
 	}
+
+
+    public void testNegativeLongsArray() throws ClassNotFoundException, IOException {
+       long[] l = new long[] { -12 };
+       Object deserialize = Serialization.deserialize(Serialization.serialize(l));
+       assertTrue(Arrays.equals(l, (long[]) deserialize));
+     }
+
+
+    public void testNegativeIntArray() throws ClassNotFoundException, IOException {
+       int[] l = new int[] { -12 };
+       Object deserialize = Serialization.deserialize(Serialization.serialize(l));
+       assertTrue(Arrays.equals(l, (int[]) deserialize));
+     }
 }
